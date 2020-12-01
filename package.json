@@ -1,0 +1,51 @@
+{
+  "name": "serial-spy",
+  "version": "1.0.0",
+  "description": "Displays on console strings received on serial lines",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "bin": "./temp/index.cjs",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./temp/index.cjs"
+  },
+  "scripts": {
+    "test": "node index.mjs config-example.json",
+    "_prepare": "cjyes",
+    "_pack": "pkg -t node14 -o dist/serial-spy .",
+    "_copy": "cp config-example.json dist",
+    "build-all": "run-s _copy _prepare _pack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LabZDjee/serial-spy.git"
+  },
+  "keywords": [
+    "serial",
+    "uart",
+    "spy",
+    "console",
+    "COM",
+    "Communication port",
+    "TTY",
+    "tap",
+    "tapping"
+  ],
+  "author": "G. Gauthier",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LabZDjee/serial-spy/issues"
+  },
+  "homepage": "https://github.com/LabZDjee/serial-spy#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "numeral": "^2.0.6",
+    "serialport": "^9.0.2"
+  },
+  "devDependencies": {
+    "cjyes": "^0.3.1",
+    "esm-to-cjs": "^1.2.0",
+    "npm-run-all": "^4.1.5"
+  }
+}

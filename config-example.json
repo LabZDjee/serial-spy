@@ -1,0 +1,34 @@
+[{
+  "comPort": "COM6",
+  "openOptions": {
+    "baudRate": 38400,
+    "dataBits": 8,
+    "parity": "none"
+  },
+  "color": "green",
+  "bgColor": "bgBlack",
+  "delimiter": "\\r\\n?$",
+  "format": "ascii",
+  "stamp": "diff",
+  "translateCtrl": "yes"
+}, {
+  "comPort": "COM7",
+  "openOptions": {
+    "baudRate": 38400,
+    "dataBits": 8,
+    "parity": "none"
+  },
+  "color": "yellow",
+  "bgColor": "bgBlack",
+  "delimiter": "\\r\\n\\u0006?$",
+  "format": "ascii",
+  "stamp": "diff",
+  "translateCtrl": "yes",
+  "replacements": [{
+    "what": "\\u0016",
+    "with": "<SYN>"
+  }, {
+    "what": "\\u0006",
+    "with": "<ACK>"
+  }]
+}]
