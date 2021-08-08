@@ -27,7 +27,7 @@ It is composed of an array of objects with the following structure:
 - `bgColor`: a string containing color of character background, can be one of: `bgBlack`, `bgRed`, `bgGreen`, `bgYellow`, `bgBlue`, `bgMagenta`, `bgCyan`, `bgWhite`, `bgBlackBright` (alias: `bgGray`, `bgGrey`), `bgRedBright`, `bgGreenBright`, `bgYellowBright`, `bgBlueBright`, `bgMagentaBright`, `bgCyanBright`, `bgWhiteBright`
 - `delimiter`: a string which defines an end of line delimiter. It's a regular expression (e.g. `\n` for line feed, `\r` for carriage return, `\u0006` for SYN). More advanced expressions can be used, such as `\r?\n$` or `(\n\u0006)|(\r\n)$`
 - `format`: a string if `hex` will display bytes as two hexadecimal uppercased digits, otherwise `ascii` and `utf8` are supported
-- `stamp`: defines timestamps, as `normal` for time in seconds since tool started, `diff` for time in seconds since last string was received and displayed on any monitored serial link, and `none` for no time-stamp displayed
+- `stamp`: defines timestamps, as `normal` for time in seconds since tool started, `diff` for time in seconds since last string was received and displayed on any monitored serial link, `time` for an absolute time stamp taken from computer clock, or `none` for no time-stamp displayed
 - `translateCtrl`: when not in hex format, if this parameter is set to `yes`, then control characters (from `\u0000` to `\u001f` inclusively) are replaced with special strings: `\0`, `\a`, `\b`, `\t`, `\n`, `\v`, `\f`, `\r` (for *null*, *bell*, *back-space*, *horizontal tab*, *line feed*, *vertical tab*, *form feed*, *carriage return*) and for the 24 remaining control characters: `^a`, `^b`, `^c`... (for `\u0001`, `\u0002`, `\u0003`...)
 - `filters`: an optional array composed strings interpreted as [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) which only allow display when they match the incoming data
 - `replacements`: an optional array which defines replacements of monitored strings, composed of objects with the following structure:
@@ -87,9 +87,15 @@ Here is an example of a fairly complex configuration and a screen shot of what i
 
 ![Screen-Shot](Screen-Shot.png)
 
+*Note:* this screen shot was taken from the original version. With present version, the `>` character is replaced `A`, `B`, etc representing first entry, second entry, etc in the JSON configuration file
+
 # How to Run
 
-This tool is written in an ECMAScript modular way ([ESM](https://nodejs.org/api/esm.html)) which from Node 14 runs without need for a `--experimental-modules` anymore. So, after a classical `npm install` from the root, just run `node index.mjs <configuration-file.json>` 
+This tool is written in an ECMAScript modular way ([ESM](https://nodejs.org/api/esm.html)) which from Node 14 runs without need for a `--experimental-modules` anymore. So, after a classical `npm install` from the root, just run `node index.mjs <configuration-file>.json [<log-file>.txt] [<log-file>.html]`
+
+Here `<log-file>` is an optional file stream which records every activity which is displayed. Can be a simple text file, or an HTML file with colored information similar to those displayed
 
 Also the idea is to compile this source into a executable binary with the help of [pkg](https://www.npmjs.com/package/pkg) utility. Such utility can be run through a script: `build-all`. Technically, *pkg* very much does not accept ESM code, only [CommonJS](https://en.wikipedia.org/wiki/CommonJS) code. So,  a tool, [cjyes](https://www.npmjs.com/package/cjyes), does this ESM-to-CJS translation. Another difficulty is [SerialPort](https://serialport.io/) NPM package this tool depends upon. This package is very depend on the target hardware. And it takes `node_modules/@serialport/bindings/build/release/bindings.node` to be placed at the same location where the executable binary sits. `build-all` script does all the job and copy the all to a `dist` sub-folder
+
+The compiled executable takes the same arguments: a configuration file and optionally stream log files
 
